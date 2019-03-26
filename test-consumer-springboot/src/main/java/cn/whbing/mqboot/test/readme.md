@@ -1,0 +1,1 @@
+原例参考carrera-sdk/consumer/java中示例

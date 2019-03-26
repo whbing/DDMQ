@@ -10,9 +10,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.xiaojukeji.ddmq</groupId>
-            <artifactId>carrera-consumer-sdk</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>com.xiaojukeji.carrera</groupId>
+            <artifactId>carrera-thrift-consumer-sdk</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xiaojukeji.carrera</groupId>
+            <artifactId>carrera-producer-sdk</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

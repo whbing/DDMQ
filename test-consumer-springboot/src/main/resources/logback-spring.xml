@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>notify-log</contextName>
+
+    <springProperty scope="context" name="logPath" source="logging.logPath" defaultValue="logs"/>
+    <property name="LOG_PATH" value="${logPath}"></property>
+    <springProperty scope="context" name="logName" source="spring.application.name" defaultValue="app"/>
+    <property name="LOG_NAME" value="${logName}"></property>
+
+    <!-- 控制台输出 -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%-5level || %date{yyyy-MM-dd HH:mm:ss} || %contextName || [%logger{96}:%line:%thread] || %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- info日志 -->
+    <appender name="InfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--过滤 Error-->
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>-+
+        <File>${LOG_PATH}/${LOG_NAME}.info.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/${LOG_NAME}.info.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <maxFileSize>1024MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%-5level || %date{yyyy-MM-dd HH:mm:ss} || %contextName || [%logger{96}:%line:%thread] || %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- error日志 -->
+    <appender name="ErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <File>${LOG_PATH}/${LOG_NAME}.error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/${LOG_NAME}.error.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <maxFileSize>1024MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%-5level || %date{yyyy-MM-dd HH:mm:ss} || %contextName || [%logger{96}:%line:%thread] || %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="InfoLog"/>
+        <appender-ref ref="ErrorLog"/>
+    </root>
+</configuration>
